@@ -1,6 +1,8 @@
 from PIL import Image
 import numpy as np
 import cv2
+from tkinter import Tk
+from tkinter.filedialog import askopenfilename
 
 # Define global variables
 global cell_count, marked_image_tolerance, manual_cells
@@ -74,10 +76,27 @@ def click_and_count(event, x, y, flags, param):
                 cv2.circle(marked_image_tolerance, cell, 10, (0, 0, 255), 2)
                 cv2.putText(marked_image_tolerance, str(cell_count), cell, cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
             update_counter_window()
+            
+def select_image_file():
+    # Initialize the Tkinter window
+    root = Tk()
+    root.withdraw()  # Hide the main window
+
+    # Open the file selection dialog
+    file_path = askopenfilename(
+        title="Select Image File",
+        filetypes=[("Image Files", "*.tiff;*.tif;*.jpg;*.png"), ("All Files", "*.*")]
+    )
+
+    root.destroy()  # Close the Tkinter window
+    return file_path
 
 # Load the image
-image_path = '/Users/seanposner/Downloads/CON BSA 2_RGB Trans.tiff'
-image = Image.open(image_path)
+image_path = select_image_file()
+if image_path:  # Check if a file was selected
+    image = Image.open(image_path)
+else:
+    print("No file selected")
 
 # Convert the image to numpy array and then to OpenCV format
 image_np = np.array(image)
