@@ -2,6 +2,10 @@ from PIL import Image
 import numpy as np
 import cv2
 
+# Define global variables
+global cell_count, marked_image_tolerance
+cell_count = 0
+
 def count_and_mark_cells_with_tolerance(image_cv2, target_color_bgr, tolerance):
     # Convert the image to HSV color space for more effective color range matching
     hsv = cv2.cvtColor(image_cv2, cv2.COLOR_BGR2HSV)
@@ -41,8 +45,8 @@ def click_and_count(event, x, y, flags, param):
     if event == cv2.EVENT_LBUTTONDOWN:
         # Increase the cell count and draw a circle to mark the manually selected cell
         cell_count += 1
-        cv2.circle(marked_image_tolerance, (x, y), 5, (255, 0, 0), -1)
-        cv2.putText(marked_image_tolerance, str(cell_count), (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 2)
+        cv2.circle(marked_image_tolerance, (x, y), 10, (0, 0, 255), 2)  # Change color or size as needed
+        cv2.putText(marked_image_tolerance, str(cell_count), (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
         cv2.imshow("Image", marked_image_tolerance)
 
 # Load the image
@@ -58,14 +62,17 @@ image_cv2 = cv2.cvtColor(image_np, cv2.COLOR_RGB2BGR)
 
 # Define the target color in BGR format and the tolerance
 target_color_bgr = [87, 29, 35]
-tolerance = np.array([50, 65, 65])  # Tolerance in HSV space
+tolerance = np.array([50, 50, 50])  # Tolerance in HSV space
 
 # Process the image with the new color range and tolerance
 marked_image_tolerance, cell_count_tolerance = count_and_mark_cells_with_tolerance(image_cv2, target_color_bgr, tolerance)
 
+# Initialize the global cell_count with the count from automatic detection
+cell_count = cell_count_tolerance
+
 # Convert the marked image back to PIL format for display
 marked_image_tolerance_pil = Image.fromarray(cv2.cvtColor(marked_image_tolerance, cv2.COLOR_BGR2RGB))
-marked_image_tolerance_pil.show()
+# marked_image_tolerance_pil.show()
 
 # Display the image with OpenCV window
 cv2.namedWindow("Image")
@@ -79,5 +86,5 @@ while True:
     
 cv2.destroyAllWindows()
 
-# Display the updated cell count
-print(cell_count_tolerance)
+# Display the final cell count including manually selected cells
+print("Total cell count:", cell_count)
