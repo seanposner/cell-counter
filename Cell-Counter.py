@@ -107,7 +107,7 @@ image_cv2 = cv2.cvtColor(image_np, cv2.COLOR_RGB2BGR)
 
 # Define the target color in BGR format and the tolerance
 target_color_bgr = [87, 29, 35]
-tolerance = np.array([50, 50, 50])  # Tolerance in HSV space
+tolerance = np.array([15, 40, 35])  # Tolerance in HSV space
 
 # Process the image with the new color range and tolerance
 marked_image_tolerance, cell_count_tolerance = count_and_mark_cells_with_tolerance(image_cv2, target_color_bgr, tolerance)
