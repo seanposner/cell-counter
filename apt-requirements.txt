@@ -1,0 +1,5 @@
+python3
+python3-pip
+python3-tk
+libgl1-mesa-glx
+libglib2.0-0
