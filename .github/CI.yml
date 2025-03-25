@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to tag the release (e.g. v1.0.0)"
+        required: true
+
+jobs:
+  build_and_release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install APT dependencies
+        run: |
+          sudo apt-get update
+          # Installs everything listed in apt-requirements.txt
+          xargs -a apt-requirements.txt sudo apt-get install -y
+
+      - name: Install Python packages
+        run: pip install -r pip-requirements.txt
+
+      - name: Run tests
+        # Adjust this command if you use pytest or another test runner
+        run: python -m unittest discover
+
+      - name: Build the Docker image
+        run: docker build -t cell-counter .
+
+      # Tag a release on GitHub only when triggered manually
+      - name: Create GitHub Release
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        uses: actions/create-release@v1
+        with:
+          tag_name: ${{ github.event.inputs.version }}
+          release_name: "Cell Counter ${{ github.event.inputs.version }}"
+          body: "Automated Release from GitHub Actions"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
