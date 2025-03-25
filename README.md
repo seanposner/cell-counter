@@ -1,6 +1,6 @@
 # Cell Counter
 
-[![CI](https://img.shields.io/github/actions/workflow/status/seanposner/cell-counter/workflows/ci.yml?branch=main&style=flat-square)]
+[![CI](https://img.shields.io/github/actions/workflow/status/seanposner/cell-counter/workflows/ci.yml?branch=main&style=flat-square)](https://github.com/seanposner/cell-counter/actions)
 
 A Python-based tool for **counting cells** from an image. It uses:
 
