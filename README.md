@@ -1,6 +1,6 @@
 # Cell Counter
 
-[![CI](https://img.shields.io/github/actions/workflow/status/seanposner/cell-counter/workflows/ci.yml?branch=main&style=flat-square)](https://github.com/seanposner/cell-counter/actions)
+[![CI](https://img.shields.io/github/actions/workflow/status/seanposner/cell-counter/.github/workflows/ci.yml?branch=main&style=flat-square)](https://github.com/seanposner/cell-counter/actions)
 
 A Python-based tool for **counting cells** from an image. It uses:
 
@@ -105,29 +105,6 @@ docker run --rm -it \
 Adjust for your OS or environment if you have a different graphical setup. For example, on macOS you might need an XQuartz-based solution; on Windows, you might need an alternative X server.
 
 Once the container starts, you’ll see the same **file selection dialog** and **GUI** windows as if running locally.
-
----
-
-## Examples
-
-### Automatic Detection Preview
-
-*If you have a screenshot of the app automatically detecting cells, place it here.*
-
-![Automatic detection screenshot](docs/automatic_detection.png)
-
-### Manual Adjustments
-
-- **Left-Click** to add a cell  
-- **Right-Click** to remove a cell (if close to its center)
-
-![Manual adjustments screenshot](docs/manual_edit.png)
-
-### Average Cell
-
-If enough contours are detected, an “Average Cell” window will appear:
-
-![Average cell screenshot](docs/average_cell.png)
 
 ---
 
